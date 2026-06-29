@@ -15,7 +15,7 @@ import categoryRoutes  from "./routes/categoryRoutes.js";
 import staffRoutes     from "./routes/staffRoutes.js";
 import publicRoutes    from "./routes/publicRoutes.js";
 import shiftRoutes     from "./routes/shiftRoutes.js";
-import tablesRoutes from "./routes/TablesRoutes.js";
+import tablesRoutes from "./routes/tablesRoutes.js";
 
 dotenv.config();
 

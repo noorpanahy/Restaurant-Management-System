@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/",                      authMiddleware, getTables);
 router.get("/:tableNumber",          authMiddleware, getTableDetail);
-//new update
+
 router.patch("/:tableNumber/clear",  authMiddleware, clearTable);
 
 export default router;
