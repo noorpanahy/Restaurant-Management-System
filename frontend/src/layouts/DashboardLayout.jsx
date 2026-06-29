@@ -35,13 +35,11 @@ function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  const [sidebarOpen, setSidebarOpen] = useState(false); // mobile default closed
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
 
-  // DARK MODE
   useEffect(() => {
     const root = document.documentElement;
-
     if (darkMode) {
       root.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -70,9 +68,8 @@ function DashboardLayout({ children }) {
       {/* SIDEBAR */}
       <aside
         className={`
-          fixed md:static z-50 top-0 left-0 h-full bg-black dark:bg-gray-900 text-white
-          transition-transform duration-300
-          w-64 md:w-64
+          fixed z-50 top-0 left-0 h-full bg-black dark:bg-gray-900 text-white
+          transition-transform duration-300 w-64
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
@@ -81,7 +78,6 @@ function DashboardLayout({ children }) {
           <button onClick={() => setSidebarOpen(false)} className="md:hidden">
             ✕
           </button>
-
           <span className="font-bold text-lg">Restaurant</span>
         </div>
 
@@ -116,7 +112,7 @@ function DashboardLayout({ children }) {
       </aside>
 
       {/* MAIN */}
-      <div className="flex-1 flex flex-col md:ml-64">
+      <div className="flex-1 flex flex-col ml-0 md:ml-64">
 
         {/* HEADER */}
         <header className="flex justify-between items-center px-4 md:px-8 py-4 bg-white dark:bg-gray-900 shadow">
@@ -144,12 +140,12 @@ function DashboardLayout({ children }) {
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded bg-gray-200 dark:bg-gray-700"
           >
-            {darkMode ? <FaSun /> : <FaMoon />}
+            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon />}
           </button>
         </header>
 
         {/* CONTENT */}
-        <main className="p-4 md:p-8">{children}</main>
+        <main className="p-4 md:p-6">{children}</main>
       </div>
     </div>
   );
