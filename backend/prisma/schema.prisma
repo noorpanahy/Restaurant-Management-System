@@ -1,0 +1,81 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  CASHIER
+  KITCHEN   // ← add this if missing
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  READY
+  DELIVERED
+}
+
+model Shift {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  clockIn   DateTime  @default(now())
+  clockOut  DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(KITCHEN)
+  pin    String?   // ← 4-digit PIN
+  shifts Shift[]
+  orders    Order[]
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  foods Food[]
+}
+
+model Food {
+  id          Int         @id @default(autoincrement())
+  name        String
+  price       Float
+  categoryId  Int
+  category    Category    @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  totalPrice  Float
+  status      OrderStatus @default(PENDING)
+  tableNumber Int?        // ← add this
+  notes       String?     // ← add this
+  paymentMethod String?   // ← add this
+  priority Boolean @default(false)
+  createdAt   DateTime    @default(now())
+  user        User        @relation(fields: [userId], references: [id])
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id        Int    @id @default(autoincrement())
+  orderId   Int
+  foodId    Int
+  quantity  Int
+  price     Float
+
+  order     Order @relation(fields: [orderId], references: [id])
+  food      Food  @relation(fields: [foodId], references: [id])
+}
