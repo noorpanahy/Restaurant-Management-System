@@ -83,6 +83,8 @@ export const clearTable = async (req, res) => {
       data: { status: "DELIVERED" },
     });
 
+
+    //updated
     res.json({ message: `Table ${tableNumber} cleared successfully` });
   } catch (error) {
     res.status(500).json({ error: error.message });
