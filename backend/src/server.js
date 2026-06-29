@@ -26,11 +26,8 @@ const publicPath = path.join(__dirname, "..", "public");
 
 // ── Middleware ────────────────────────────────────────────────
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    // "https://luminous-love-production-2ed6.up.railway.app", // ✅ frontend
-  ],
-  credentials: true,
+  origin: "https://amiable-success-production-639e.up.railway.app",
+  credentials: true
 }));
 
 app.use(express.json());
